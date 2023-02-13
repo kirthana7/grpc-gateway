@@ -91,7 +91,7 @@ func atlasSwagger(b []byte, withPrivateMethods, withCustomAnnotations bool) stri
 	for pn, pi := range sw.Paths.Paths {
 		var pnElements []string
 		for _, v := range strings.Split(pn, "/") {
-			if strings.HasSuffix(v, "id.resource_id}") || strings.HasSuffix(v, ".id}") {
+			if strings.HasSuffix(v, "id.resource_id}") || strings.HasSuffix(v, ".id}") || strings.HasSuffix(v, ".value}") {
 				pnElements = append(pnElements, "{id}")
 			} else {
 				pnElements = append(pnElements, v)
