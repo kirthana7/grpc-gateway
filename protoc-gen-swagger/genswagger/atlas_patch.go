@@ -192,6 +192,8 @@ The service-defined string used to identify a page of resources. A null value in
 					default:
 						fixedParams = append(fixedParams, param)
 					}
+				} else if strings.HasSuffix(param.Name, "id") &&  param.In == "query" {
+					continue
 				} else {
 					// Gather ref in body.
 					if param.In == "body" && param.Schema != nil {
