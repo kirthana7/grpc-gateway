@@ -70,6 +70,38 @@ func TestAtlasPatch(t *testing.T) {
           "Service"
         ]
       }
+    },
+    "/api/discovery/v1/mergeconfigs/{id.value}": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "operationId": "Read",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "The string value.",
+            "name": "id.value",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GET operation response",
+            "schema": {
+              "$ref": "#/definitions/exampleRead"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -93,7 +125,13 @@ func TestAtlasPatch(t *testing.T) {
 				if param.Name == "application_name" || param.Name == "resource_type" {
 					t.Error("atlasPatch should filter out required params that are not part of URL")
 				}
-				if param.Name == "resource_id" {
+				if param.Name == "id.value" {
+					t.Error("atlasPatch should replace id.value in URL with just id")
+				}
+				if param.Name == "id" && param.In == "query" {
+					t.Error("atlasPatch should filter out id present in query")
+				}
+				if param.Name == "resource_id" || (param.Name == "id" && param.In == "path"){
 					resourceIDPresent = true
 				}
 			}
