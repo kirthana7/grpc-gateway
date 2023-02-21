@@ -91,7 +91,7 @@ func atlasSwagger(b []byte, withPrivateMethods, withCustomAnnotations bool) stri
 	for pn, pi := range sw.Paths.Paths {
 		var pnElements []string
 		for _, v := range strings.Split(pn, "/") {
-			if strings.HasSuffix(v, "id.resource_id}") || strings.HasSuffix(v, ".id}") {
+			if strings.HasSuffix(v, "id.resource_id}") || strings.HasSuffix(v, ".id}") || strings.HasSuffix(v, "id.value}") {
 				pnElements = append(pnElements, "{id}")
 			} else {
 				pnElements = append(pnElements, v)
@@ -180,7 +180,7 @@ The service-defined string used to identify a page of resources. A null value in
 					default:
 					}
 					// Replace resource_id with id
-				} else if strings.HasSuffix(param.Name, "id.resource_id") || strings.HasSuffix(param.Name, ".id") {
+				} else if strings.HasSuffix(param.Name, "id.resource_id") || strings.HasSuffix(param.Name, ".id") || strings.HasSuffix(param.Name, "id.value") {
 					param.Name = "id"
 					fixedParams = append(fixedParams, param)
 				} else if strings.HasPrefix(param.Description, "tagging.api.") {
@@ -192,6 +192,9 @@ The service-defined string used to identify a page of resources. A null value in
 					default:
 						fixedParams = append(fixedParams, param)
 					}
+				} else if strings.HasSuffix(param.Name, "id") && param.In == "query" {
+					//skip ID if its present in 'query'
+					continue
 				} else {
 					// Gather ref in body.
 					if param.In == "body" && param.Schema != nil {
