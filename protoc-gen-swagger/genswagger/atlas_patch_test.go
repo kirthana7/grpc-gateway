@@ -2,10 +2,10 @@ package genswagger
 
 import (
 	"encoding/json"
-	"github.com/go-openapi/spec"
 	"testing"
-)
 
+	"github.com/go-openapi/spec"
+)
 
 func TestAtlasPatch(t *testing.T) {
 	input := `
@@ -71,7 +71,7 @@ func TestAtlasPatch(t *testing.T) {
         ]
       }
     },
-    "/api/discovery/v1/mergeconfigs/{id.value}": {
+    "/api/v1/examples/{id.value}": {
       "get": {
         "tags": [
           "Service"
@@ -131,7 +131,7 @@ func TestAtlasPatch(t *testing.T) {
 				if param.Name == "id" && param.In == "query" {
 					t.Error("atlasPatch should filter out id present in query")
 				}
-				if param.Name == "resource_id" || (param.Name == "id" && param.In == "path"){
+				if param.Name == "resource_id" || (param.Name == "id" && param.In == "path") {
 					resourceIDPresent = true
 				}
 			}
