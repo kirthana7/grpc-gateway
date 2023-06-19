@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-
 func TestAtlasPatch(t *testing.T) {
 	input := `
 {
@@ -71,7 +70,7 @@ func TestAtlasPatch(t *testing.T) {
         ]
       }
     },
-    "/api/discovery/v1/mergeconfigs/{id.value}": {
+    "/api/v1/example/{id.value}": {
       "get": {
         "tags": [
           "Service"
@@ -131,7 +130,7 @@ func TestAtlasPatch(t *testing.T) {
 				if param.Name == "id" && param.In == "query" {
 					t.Error("atlasPatch should filter out id present in query")
 				}
-				if param.Name == "resource_id" || (param.Name == "id" && param.In == "path"){
+				if param.Name == "resource_id" || (param.Name == "id" && param.In == "path") {
 					resourceIDPresent = true
 				}
 			}
